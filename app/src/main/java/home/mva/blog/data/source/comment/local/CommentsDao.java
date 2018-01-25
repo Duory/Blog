@@ -1,4 +1,4 @@
-package home.mva.blog.data.source.comment;
+package home.mva.blog.data.source.comment.local;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
