@@ -1,4 +1,4 @@
-package home.mva.blog.data.source.comment;
+package home.mva.blog.data.source;
 
 import java.util.List;
 
