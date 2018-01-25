@@ -14,7 +14,7 @@ public interface PostsDao {
     @Query("SELECT * FROM posts")
     List<Post> getPosts();
 
-    @Query("SELECT * FROM posts WHERE postid =:postId")
+    @Query("SELECT * FROM posts WHERE id =:postId")
     Post getPostById(String postId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
