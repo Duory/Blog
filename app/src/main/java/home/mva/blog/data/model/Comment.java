@@ -2,12 +2,18 @@ package home.mva.blog.data.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
+
+import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 /**
  * Model class for a Comment.
  */
-@Entity(tableName = "comments")
+@Entity(foreignKeys = @ForeignKey(entity = Post.class,
+                                  parentColumns = "id",
+                                  childColumns = "postid",
+                                  onDelete = CASCADE))
 public class Comment {
 
     @PrimaryKey
