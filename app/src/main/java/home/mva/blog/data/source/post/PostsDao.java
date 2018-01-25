@@ -1,5 +1,6 @@
 package home.mva.blog.data.source.post;
 
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
@@ -23,6 +24,7 @@ public interface PostsDao {
     @Update
     void updatePost(Post post);
 
-    @Query("DELETE FROM posts WHERE entryid =:postId")
+    @Delete
     void deletePost(Post post);
+    
 }
