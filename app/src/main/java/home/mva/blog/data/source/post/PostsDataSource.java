@@ -22,7 +22,7 @@ public interface PostsDataSource {
 
     void getPosts(GetPostsCallback callback);
 
-    void getPost(GetPostCallback callback);
+    void getPost(String postId, GetPostCallback callback);
 
     void addPost(Post post);
 
