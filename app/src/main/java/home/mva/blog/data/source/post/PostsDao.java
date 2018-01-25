@@ -1,5 +1,6 @@
 package home.mva.blog.data.source.post;
 
+import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import home.mva.blog.data.model.Post;
 
+@Dao
 public interface PostsDao {
 
     @Query("SELECT * FROM posts")
@@ -26,5 +28,5 @@ public interface PostsDao {
 
     @Delete
     void deletePost(Post post);
-    
+
 }
