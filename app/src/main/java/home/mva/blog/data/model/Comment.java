@@ -10,7 +10,8 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 /**
  * Model class for a Comment.
  */
-@Entity(foreignKeys = @ForeignKey(entity = Post.class,
+@Entity(tableName = "comments",
+        foreignKeys = @ForeignKey(entity = Post.class,
                                   parentColumns = "id",
                                   childColumns = "postid",
                                   onDelete = CASCADE))
