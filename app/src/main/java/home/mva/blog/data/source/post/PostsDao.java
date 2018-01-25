@@ -9,7 +9,7 @@ import java.util.List;
 
 import home.mva.blog.data.model.Post;
 
-public interface PostDao {
+public interface PostsDao {
 
     @Query("SELECT * FROM posts")
     List<Post> getPosts();
