@@ -28,8 +28,6 @@ public interface CommentsDataSource {
 
     void addComment(Comment comment);
 
-    void updateComment(Comment comment);
-
     void deleteComment(Comment comment);
 
     void refreshComments();
