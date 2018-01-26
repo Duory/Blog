@@ -22,9 +22,9 @@ public interface CommentsDataSource {
 
     void getComments(GetCommentsCallback callback);
 
-    void getCommentsByPostId(String postId, GetCommentsCallback callback);
+    void getCommentsByPostId(Integer postId, GetCommentsCallback callback);
 
-    void getComment(String commentId, GetCommentCallback callback);
+    void getComment(Integer commentId, GetCommentCallback callback);
 
     void addComment(Comment comment);
 

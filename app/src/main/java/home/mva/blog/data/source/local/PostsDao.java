@@ -18,7 +18,7 @@ public interface PostsDao {
     List<Post> getPosts();
 
     @Query("SELECT * FROM posts WHERE id =:postId")
-    Post getPostById(String postId);
+    Post getPostById(Integer postId);
 
     @Insert(onConflict = OnConflictStrategy.FAIL)
     void insertPost(Post post);

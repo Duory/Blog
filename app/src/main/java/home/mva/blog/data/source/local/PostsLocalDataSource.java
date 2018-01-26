@@ -58,7 +58,7 @@ public class PostsLocalDataSource implements PostsDataSource {
     }
 
     @Override
-    public void getPost(final String postId, final GetPostCallback callback) {
+    public void getPost(final Integer postId, final GetPostCallback callback) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {

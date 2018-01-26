@@ -17,10 +17,10 @@ public interface CommentsDao {
     List<Comment> getComments();
 
     @Query("SELECT * FROM comments WHERE postid=:postId")
-    List<Comment> getCommentsForPost(final int postId);
+    List<Comment> getCommentsForPost(Integer postId);
 
     @Query("SELECT * FROM comments WHERE id=:commentId")
-    Comment getCommentById(String commentId);
+    Comment getCommentById(Integer commentId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertComment(Comment comment);
