@@ -1,12 +1,8 @@
 package home.mva.blog.data.source;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import home.mva.blog.data.model.Post;
 
@@ -22,10 +18,8 @@ public class PostsRepository implements PostsDataSource {
 
     private final PostsDataSource mPostsRemoteDataSource;
 
-    private Map<Integer, Post> mCachedPosts;
-
     /**
-     * Marks the cache as dirty, to force an update the next time data is requested.
+     * Marks the local data as dirty, to force an update the next time data is requested.
      */
     private boolean mCacheIsDirty = false;
 
@@ -49,17 +43,11 @@ public class PostsRepository implements PostsDataSource {
     }
 
     /**
-     * Gets posts from cache, local data source or remote data source, whichever is
+     * Gets posts from local data source or remote data source, whichever is
      * available first.
      */
     @Override
     public void getPosts(@NonNull final GetPostsCallback callback) {
-
-        // Respond immediately with cache if available and not dirty
-        if (mCachedPosts != null && !mCacheIsDirty) {
-            callback.onPostsLoaded(new ArrayList<Post>(mCachedPosts.values()));
-            return;
-        }
 
         if (mCacheIsDirty) {
             // If the cache is dirty we need to fetch new data from the remote.
@@ -69,8 +57,7 @@ public class PostsRepository implements PostsDataSource {
             mPostsLocalDataSource.getPosts(new GetPostsCallback() {
                 @Override
                 public void onPostsLoaded(List<Post> posts) {
-                    refreshCache(posts);
-                    callback.onPostsLoaded(new ArrayList<Post>(mCachedPosts.values()));
+                    callback.onPostsLoaded(posts);
                 }
 
                 @Override
@@ -82,29 +69,16 @@ public class PostsRepository implements PostsDataSource {
     }
 
     /**
-     * Gets post from cache, local data source or remote data source, whichever is
+     * Gets post from local data source or remote data source, whichever is
      * available first.
      */
     @Override
     public void getPost(@NonNull final Integer postId, @NonNull final GetPostCallback callback) {
 
-        Post cachedPost = getPostWithId(postId);
-
-        // Respond immediately with cache if available
-        if (cachedPost != null) {
-            callback.onPostLoaded(cachedPost);
-            return;
-        }
-
         // Is the post in the local data source? If not, query the network.
         mPostsLocalDataSource.getPost(postId, new GetPostCallback() {
             @Override
             public void onPostLoaded(Post post) {
-                // Do in memory cache update to keep the app UI up to date
-                if (mCachedPosts == null) {
-                    mCachedPosts = new LinkedHashMap<>();
-                }
-                mCachedPosts.put(post.getId(), post);
                 callback.onPostLoaded(post);
             }
 
@@ -113,11 +87,7 @@ public class PostsRepository implements PostsDataSource {
                 mPostsRemoteDataSource.getPost(postId, new GetPostCallback() {
                     @Override
                     public void onPostLoaded(Post post) {
-                        // Do in memory cache update to keep the app UI up to date
-                        if (mCachedPosts == null) {
-                            mCachedPosts = new LinkedHashMap<>();
-                        }
-                        mCachedPosts.put(post.getId(), post);
+                        mPostsLocalDataSource.addPost(post);
                         callback.onPostLoaded(post);
                     }
 
@@ -135,12 +105,6 @@ public class PostsRepository implements PostsDataSource {
 
         mPostsLocalDataSource.addPost(post);
         mPostsRemoteDataSource.addPost(post);
-
-        // Do in memory cache update to keep the app UI up to date
-        if (mCachedPosts == null) {
-            mCachedPosts = new LinkedHashMap<>();
-        }
-        mCachedPosts.put(post.getId(), post);
     }
 
     @Override
@@ -149,8 +113,6 @@ public class PostsRepository implements PostsDataSource {
         mPostsLocalDataSource.updatePost(post);
         mPostsRemoteDataSource.updatePost(post);
 
-        mCachedPosts.put(post.getId(), post);
-
     }
 
     @Override
@@ -158,11 +120,6 @@ public class PostsRepository implements PostsDataSource {
 
         mPostsLocalDataSource.deleteAllPosts();
         mPostsRemoteDataSource.deleteAllPosts();
-
-        if (mCachedPosts == null) {
-            mCachedPosts = new LinkedHashMap<>();
-        }
-        mCachedPosts.clear();
     }
 
     @Override
@@ -170,8 +127,6 @@ public class PostsRepository implements PostsDataSource {
 
         mPostsLocalDataSource.deletePost(post);
         mPostsRemoteDataSource.deletePost(post);
-
-        mCachedPosts.remove(post.getId());
     }
 
     @Override
@@ -184,9 +139,8 @@ public class PostsRepository implements PostsDataSource {
         mPostsRemoteDataSource.getPosts(new GetPostsCallback() {
             @Override
             public void onPostsLoaded(List<Post> posts) {
-                refreshCache(posts);
                 refreshLocalDataSource(posts);
-                callback.onPostsLoaded(new ArrayList<Post>(mCachedPosts.values()));
+                callback.onPostsLoaded(posts);
             }
 
             @Override
@@ -196,27 +150,6 @@ public class PostsRepository implements PostsDataSource {
         });
     }
 
-    @Nullable
-    private Post getPostWithId(@NonNull Integer postId) {
-
-        if (mCachedPosts == null || mCachedPosts.isEmpty()) {
-            return null;
-        } else {
-            return mCachedPosts.get(postId);
-        }
-    }
-
-    private void refreshCache(List<Post> posts) {
-        if (mCachedPosts == null) {
-            mCachedPosts = new LinkedHashMap<>();
-        }
-        mCachedPosts.clear();
-        for (Post post : posts) {
-            mCachedPosts.put(post.getId(), post);
-        }
-        mCacheIsDirty = false;
-    }
-
     private void refreshLocalDataSource(List<Post> posts) {
 
         mPostsLocalDataSource.deleteAllPosts();
@@ -224,5 +157,7 @@ public class PostsRepository implements PostsDataSource {
         for (Post post : posts) {
             mPostsLocalDataSource.addPost(post);
         }
+
+        mCacheIsDirty = false;
     }
 }
