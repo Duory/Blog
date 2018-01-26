@@ -13,9 +13,6 @@ import home.mva.blog.data.model.Comment;
 @Dao
 public interface CommentsDao {
 
-    @Query("SELECT * FROM comments")
-    List<Comment> getComments();
-
     @Query("SELECT * FROM comments WHERE postid=:postId")
     List<Comment> getCommentsForPost(Integer postId);
 

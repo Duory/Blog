@@ -20,8 +20,6 @@ public interface CommentsDataSource {
         void onDataNotAvailable();
     }
 
-    void getComments(GetCommentsCallback callback);
-
     void getCommentsByPostId(Integer postId, GetCommentsCallback callback);
 
     void getComment(Integer commentId, GetCommentCallback callback);

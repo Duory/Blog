@@ -37,28 +37,6 @@ public class CommentsLocalDataSource implements CommentsDataSource {
     }
 
     @Override
-    public void getComments(@NonNull final GetCommentsCallback callback) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                final List<Comment> comments = mCommentsDao.getComments();
-                mAppExecutors.getMainThread().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (comments.isEmpty()) {
-                            // This will be called if the table is new or just empty.
-                            callback.onDataNotAvailable();
-                        } else {
-                            callback.onCommentsLoaded(comments);
-                        }
-                    }
-                });
-            }
-        };
-        mAppExecutors.getDiskIO().execute(runnable);
-    }
-
-    @Override
     public void getCommentsByPostId(@NonNull final Integer postId, @NonNull final GetCommentsCallback callback) {
         Runnable runnable = new Runnable() {
             @Override
