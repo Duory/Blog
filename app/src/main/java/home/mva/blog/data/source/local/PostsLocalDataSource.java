@@ -102,6 +102,17 @@ public class PostsLocalDataSource implements PostsDataSource {
     }
 
     @Override
+    public void deleteAllPosts() {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mPostsDao.deletePosts();
+            }
+        };
+        mAppExecutors.getDiskIO().execute(runnable);
+    }
+
+    @Override
     public void deletePost(@NonNull final Post post) {
         Runnable runnable = new Runnable() {
             @Override

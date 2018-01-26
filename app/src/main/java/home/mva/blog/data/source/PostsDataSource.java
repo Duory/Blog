@@ -28,6 +28,8 @@ public interface PostsDataSource {
 
     void updatePost(Post post);
 
+    void deleteAllPosts();
+
     void deletePost(Post post);
 
     void refreshPosts();
