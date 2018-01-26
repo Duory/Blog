@@ -48,7 +48,6 @@ public class PostsRepository implements PostsDataSource {
         instance = null;
     }
 
-
     /**
      * Gets posts from cache, local data source or remote data source, whichever is
      * available first.
@@ -81,7 +80,6 @@ public class PostsRepository implements PostsDataSource {
             });
         }
     }
-
 
     /**
      * Gets post from cache, local data source or remote data source, whichever is
@@ -218,7 +216,6 @@ public class PostsRepository implements PostsDataSource {
         }
         mCacheIsDirty = false;
     }
-
 
     private void refreshLocalDataSource(List<Post> posts) {
 

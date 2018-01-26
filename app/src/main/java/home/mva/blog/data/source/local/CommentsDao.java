@@ -27,4 +27,7 @@ public interface CommentsDao {
 
     @Delete
     void deleteComment(Comment comment);
+
+    @Query("DELETE FROM comments")
+    void deleteComments();
 }

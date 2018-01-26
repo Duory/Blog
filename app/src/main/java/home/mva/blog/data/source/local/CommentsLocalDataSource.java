@@ -114,6 +114,17 @@ public class CommentsLocalDataSource implements CommentsDataSource {
     }
 
     @Override
+    public void deleteAllComments() {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mCommentsDao.deleteComments();
+            }
+        };
+        mAppExecutors.getDiskIO().execute(runnable);
+    }
+
+    @Override
     public void deleteComment(@NonNull final Comment comment) {
         Runnable runnable = new Runnable() {
             @Override
