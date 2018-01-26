@@ -54,7 +54,6 @@ public class PostsLocalDataSource implements PostsDataSource {
                 });
             }
         };
-
         mAppExecutors.getDiskIO().execute(runnable);
     }
 
@@ -77,7 +76,6 @@ public class PostsLocalDataSource implements PostsDataSource {
                 });
             }
         };
-
         mAppExecutors.getDiskIO().execute(runnable);
     }
 
