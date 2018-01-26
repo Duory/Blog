@@ -20,7 +20,7 @@ public interface PostsDao {
     @Query("SELECT * FROM posts WHERE id =:postId")
     Post getPostById(Integer postId);
 
-    @Insert(onConflict = OnConflictStrategy.FAIL)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertPost(Post post);
 
     @Update
