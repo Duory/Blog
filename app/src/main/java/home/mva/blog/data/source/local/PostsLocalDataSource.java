@@ -68,7 +68,7 @@ public class PostsLocalDataSource implements PostsDataSource {
                     @Override
                     public void run() {
                         if (post == null) {
-                            // This will be called if requested post does not exist.
+                            // This will be called if requested element does not exist.
                             callback.onDataNotAvailable();
                         } else {
                             callback.onPostLoaded(post);
