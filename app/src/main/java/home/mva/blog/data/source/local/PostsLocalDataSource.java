@@ -58,7 +58,7 @@ public class PostsLocalDataSource implements PostsDataSource {
     }
 
     @Override
-    public void getPost(final Integer postId, final GetPostCallback callback) {
+    public void getPost(@NonNull final Integer postId, final GetPostCallback callback) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -91,7 +91,7 @@ public class PostsLocalDataSource implements PostsDataSource {
     }
 
     @Override
-    public void updatePost(final Post post) {
+    public void updatePost(@NonNull final Post post) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -102,7 +102,7 @@ public class PostsLocalDataSource implements PostsDataSource {
     }
 
     @Override
-    public void deletePost(final Post post) {
+    public void deletePost(@NonNull final Post post) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
