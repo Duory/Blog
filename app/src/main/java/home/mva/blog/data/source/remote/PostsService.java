@@ -25,8 +25,8 @@ public interface PostsService {
     @PUT("posts/{id}")
     Call<Post> updatePost(@Body Post post);
 
-    @DELETE("/posts")
-    void deleteAllPosts();
+    //@DELETE("/posts")
+    //void deleteAllPosts();
 
     @DELETE("/posts/{id}")
     void deletePostById(@Path("id") int id);
