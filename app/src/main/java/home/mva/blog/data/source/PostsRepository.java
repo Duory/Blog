@@ -103,7 +103,6 @@ public class PostsRepository implements PostsDataSource {
     @Override
     public void addPost(@NonNull Post post) {
 
-        mPostsLocalDataSource.addPost(post);
         mPostsRemoteDataSource.addPost(post);
     }
 
