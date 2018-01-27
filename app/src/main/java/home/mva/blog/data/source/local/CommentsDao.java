@@ -16,15 +16,12 @@ public interface CommentsDao {
     @Query("SELECT * FROM comments WHERE postid=:postId")
     List<Comment> getCommentsForPost(Integer postId);
 
-    @Query("SELECT * FROM comments WHERE id=:commentId")
-    Comment getCommentById(Integer commentId);
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertComment(Comment comment);
 
     @Delete
     void deleteComment(Comment comment);
 
-    @Query("DELETE FROM comments")
-    void deleteComments();
+    @Query("DELETE FROM comments WHERE postid=:postId")
+    void deleteCommentsByPostId(Integer postId);
 }

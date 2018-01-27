@@ -35,9 +35,6 @@ public interface BlogService {
     @GET("/posts/{id}/comments")
     Call<List<Comment>> getCommentsByPostId(@Path("id") int id);
 
-    @GET("/comments/{id}")
-    Call<Comment> getCommentById(@Path("id") int id);
-
     @POST("/comments")
     Call<Comment> addComment(@Body Comment comment);
 

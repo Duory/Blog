@@ -72,28 +72,6 @@ public class CommentsRepository implements CommentsDataSource {
     }
 
     @Override
-    public void getComment(@NonNull final Integer commentId,
-                           @NonNull final GetCommentCallback callback) {
-
-        if (mCacheIsDirty) {
-            // If the cache is dirty we need to fetch new data from the remote.
-            getCommentFromRemoteDataSource(commentId, callback);
-        }
-        // Is the comment in the local data source? If not, query the network.
-        mCommentsLocalDataSource.getComment(commentId, new GetCommentCallback() {
-            @Override
-            public void onCommentLoaded(Comment comment) {
-                callback.onCommentLoaded(comment);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                getCommentFromRemoteDataSource(commentId, callback);
-            }
-        });
-    }
-
-    @Override
     public void addComment(@NonNull Comment comment) {
 
         mCommentsLocalDataSource.addComment(comment);
@@ -101,14 +79,14 @@ public class CommentsRepository implements CommentsDataSource {
     }
 
     @Override
-    public void deleteAllComments() {
+    public void deleteCommentsByPostId(@NonNull final Integer postId) {
 
-        mCommentsLocalDataSource.deleteAllComments();
-        mCommentsRemoteDataSource.deleteAllComments();
+        mCommentsLocalDataSource.deleteCommentsByPostId(postId);
+        mCommentsRemoteDataSource.deleteCommentsByPostId(postId);
     }
 
     @Override
-    public void deleteComment(Comment comment) {
+    public void deleteComment(@NonNull final Comment comment) {
 
         mCommentsLocalDataSource.deleteComment(comment);
         mCommentsRemoteDataSource.deleteComment(comment);
@@ -125,7 +103,7 @@ public class CommentsRepository implements CommentsDataSource {
         mCommentsRemoteDataSource.getCommentsByPostId(postId, new GetCommentsCallback() {
             @Override
             public void onCommentsLoaded(List<Comment> comments) {
-                updateLocalDataSource(comments);
+                updateLocalDataSource(postId, comments);
                 callback.onCommentsLoaded(comments);
             }
 
@@ -136,27 +114,13 @@ public class CommentsRepository implements CommentsDataSource {
         });
     }
 
-    private void updateLocalDataSource(List<Comment> comments) {
+    private void updateLocalDataSource(Integer postId, List<Comment> comments) {
+
+        mCommentsLocalDataSource.deleteCommentsByPostId(postId);
 
         for (Comment comment : comments){
             mCommentsLocalDataSource.addComment(comment);
         }
-    }
-
-    private void getCommentFromRemoteDataSource(final Integer commentId, final GetCommentCallback callback) {
-
-        mCommentsRemoteDataSource.getComment(commentId, new GetCommentCallback() {
-            @Override
-            public void onCommentLoaded(Comment comment) {
-                updateLocalDataSource(Collections.singletonList(comment));
-                callback.onCommentLoaded(comment);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                callback.onDataNotAvailable();
-            }
-        });
     }
 
 }

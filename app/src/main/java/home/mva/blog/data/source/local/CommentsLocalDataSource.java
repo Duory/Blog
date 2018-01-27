@@ -59,28 +59,6 @@ public class CommentsLocalDataSource implements CommentsDataSource {
     }
 
     @Override
-    public void getComment(@NonNull final Integer commentId, @NonNull final GetCommentCallback callback) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                final Comment comment = mCommentsDao.getCommentById(commentId);
-                mAppExecutors.getMainThread().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (comment == null) {
-                            // This will be called if requested element does not exist.
-                            callback.onDataNotAvailable();
-                        } else {
-                            callback.onCommentLoaded(comment);
-                        }
-                    }
-                });
-            }
-        };
-        mAppExecutors.getDiskIO().execute(runnable);
-    }
-
-    @Override
     public void addComment(@NonNull final Comment comment) {
         Runnable runnable = new Runnable() {
             @Override
@@ -92,11 +70,11 @@ public class CommentsLocalDataSource implements CommentsDataSource {
     }
 
     @Override
-    public void deleteAllComments() {
+    public void deleteCommentsByPostId(@NonNull final Integer postId) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                mCommentsDao.deleteComments();
+                mCommentsDao.deleteCommentsByPostId(postId);
             }
         };
         mAppExecutors.getDiskIO().execute(runnable);

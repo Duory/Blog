@@ -13,20 +13,11 @@ public interface CommentsDataSource {
         void onDataNotAvailable();
     }
 
-    interface GetCommentCallback {
-
-        void onCommentLoaded(Comment comment);
-
-        void onDataNotAvailable();
-    }
-
     void getCommentsByPostId(Integer postId, GetCommentsCallback callback);
-
-    void getComment(Integer commentId, GetCommentCallback callback);
 
     void addComment(Comment comment);
 
-    void deleteAllComments();
+    void deleteCommentsByPostId(Integer postId);
 
     void deleteComment(Comment comment);
 

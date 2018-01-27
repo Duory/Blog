@@ -49,18 +49,13 @@ public class BlogRemoteDataSource implements PostsDataSource, CommentsDataSource
     }
 
     @Override
-    public void getComment(Integer commentId, GetCommentCallback callback) {
-
-    }
-
-    @Override
     public void addComment(Comment comment) {
 
     }
 
     @Override
-    public void deleteAllComments() {
-        //No needed for remote for now
+    public void deleteCommentsByPostId(Integer postId) {
+        //no needed for remote for now
     }
 
     @Override
