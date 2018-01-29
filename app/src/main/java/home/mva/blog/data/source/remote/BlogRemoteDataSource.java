@@ -8,7 +8,6 @@ import home.mva.blog.data.model.Comment;
 import home.mva.blog.data.model.Post;
 import home.mva.blog.data.source.CommentsDataSource;
 import home.mva.blog.data.source.PostsDataSource;
-import home.mva.blog.util.AppExecutors;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
