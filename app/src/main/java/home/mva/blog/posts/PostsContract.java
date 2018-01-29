@@ -19,7 +19,7 @@ public interface PostsContract {
 
         void showPosts(List<Post> posts);
 
-        void showPostDetailsUi(String postId);
+        void showPostDetailsUi(Integer postId);
 
         void showAddPost();
 
