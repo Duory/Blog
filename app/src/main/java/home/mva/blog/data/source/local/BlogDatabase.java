@@ -17,7 +17,7 @@ public abstract class BlogDatabase extends RoomDatabase {
     private static final String DB_NAME = "blogDatabase.db";
     private static volatile BlogDatabase instance;
 
-    static synchronized BlogDatabase getInstance(Context context) {
+    public static synchronized BlogDatabase getInstance(Context context) {
         if (instance == null) {
             instance = create(context);
         }
