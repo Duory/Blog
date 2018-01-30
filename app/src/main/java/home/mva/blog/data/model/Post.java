@@ -12,46 +12,47 @@ public final class Post {
 
     @PrimaryKey
     @ColumnInfo(name = "id")
-    private Integer mId;
+    private Integer id;
 
     @ColumnInfo(name = "userid")
-    private Integer mUserId;
+    private Integer userId;
 
     @ColumnInfo(name = "title")
-    private String mTitle;
+    private String title;
 
     @ColumnInfo(name = "body")
-    private String mBody;
+    private String body;
+
 
     public Integer getId() {
-        return mId;
+        return id;
     }
 
     public void setId(Integer mId) {
-        this.mId = mId;
+        this.id = mId;
     }
 
     public Integer getUserId() {
-        return mUserId;
+        return userId;
     }
 
     public void setUserId(Integer mUserId) {
-        this.mUserId = mUserId;
+        this.userId = mUserId;
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     public void setTitle(String mTitle) {
-        this.mTitle = mTitle;
+        this.title = mTitle;
     }
 
     public String getBody() {
-        return mBody;
+        return body;
     }
 
     public void setBody(String mBody) {
-        this.mBody = mBody;
+        this.body = mBody;
     }
 }

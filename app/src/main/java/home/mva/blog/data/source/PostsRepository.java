@@ -30,8 +30,8 @@ public class PostsRepository implements PostsDataSource {
         mPostsRemoteDataSource = postsRemoteDataSource;
     }
 
-    public static PostsRepository getInstance(PostsDataSource postsLocalDataSource,
-                                              PostsDataSource postsRemoteDataSource) {
+    public static PostsRepository getInstance(PostsDataSource postsRemoteDataSource,
+                                              PostsDataSource postsLocalDataSource) {
         if (instance == null) {
             instance = new PostsRepository(postsLocalDataSource, postsRemoteDataSource);
         }
