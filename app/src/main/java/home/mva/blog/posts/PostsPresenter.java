@@ -2,7 +2,6 @@ package home.mva.blog.posts;
 
 import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import home.mva.blog.data.model.Post;
