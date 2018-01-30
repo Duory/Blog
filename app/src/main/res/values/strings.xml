@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Blog</string>
+    <string name="successfully_saved_post_message">post saved</string>
+    <string name="no_posts_message">no posts</string>
+    <string name="loading_posts_error">can\'t load posts</string>
+    <string name="post_author">Author: </string>
 </resources>
