@@ -2,6 +2,8 @@ package home.mva.blog.data.source;
 
 import android.support.annotation.NonNull;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import home.mva.blog.data.model.Post;
@@ -22,6 +24,11 @@ public class PostsRepository implements PostsDataSource {
      * Marks the local data as dirty, to force an update the next time data is requested.
      */
     private boolean mCacheIsDirty = false;
+
+    /**
+     * Tells that offline mod enabled
+     */
+    private boolean mAppIsOffline = false;
 
     // Prevent direct instantiation.
     private PostsRepository(@NonNull PostsDataSource postsLocalDataSource,
@@ -49,11 +56,11 @@ public class PostsRepository implements PostsDataSource {
     @Override
     public void getPosts(@NonNull final GetPostsCallback callback) {
 
-        if (mCacheIsDirty) {
-            // If the cache is dirty we need to fetch new data from the remote.
+        if (mCacheIsDirty && !mAppIsOffline) {
+            // If the cache is dirty and online we need to fetch new data from the remote.
             getPostsFromRemoteDataSource(callback);
         } else {
-            // Query the local storage if available. If not, query the network.
+            // Query the local storage if available. If not, query the network if online.
             mPostsLocalDataSource.getPosts(new GetPostsCallback() {
                 @Override
                 public void onPostsLoaded(List<Post> posts) {
@@ -62,7 +69,11 @@ public class PostsRepository implements PostsDataSource {
 
                 @Override
                 public void onDataNotAvailable() {
-                    getPostsFromRemoteDataSource(callback);
+                    if (!mAppIsOffline) {
+                        getPostsFromRemoteDataSource(callback);
+                    } else {
+                        callback.onDataNotAvailable();
+                    }
                 }
             });
         }
@@ -75,7 +86,12 @@ public class PostsRepository implements PostsDataSource {
     @Override
     public void getPost(@NonNull final Integer postId, @NonNull final GetPostCallback callback) {
 
-        // Is the post in the local data source? If not, query the network.
+        if (mCacheIsDirty && !mAppIsOffline) {
+            // If the cache is dirty and online we need to fetch new data from the remote.
+            getPostFromRemoteDataSource(postId, callback);
+        }
+
+        // Is the post in the local data source? If not, query the network if online.
         mPostsLocalDataSource.getPost(postId, new GetPostCallback() {
             @Override
             public void onPostLoaded(Post post) {
@@ -84,18 +100,11 @@ public class PostsRepository implements PostsDataSource {
 
             @Override
             public void onDataNotAvailable() {
-                mPostsRemoteDataSource.getPost(postId, new GetPostCallback() {
-                    @Override
-                    public void onPostLoaded(Post post) {
-                        mPostsLocalDataSource.addPost(post);
-                        callback.onPostLoaded(post);
-                    }
-
-                    @Override
-                    public void onDataNotAvailable() {
-                        callback.onDataNotAvailable();
-                    }
-                });
+                if (!mAppIsOffline) {
+                    getPostFromRemoteDataSource(postId, callback);
+                } else {
+                    callback.onDataNotAvailable();
+                }
             }
         });
     }
@@ -144,6 +153,24 @@ public class PostsRepository implements PostsDataSource {
 
             @Override
             public void onDataNotAvailable() {
+                mAppIsOffline = true;
+                callback.onDataNotAvailable();
+            }
+        });
+    }
+
+    private void getPostFromRemoteDataSource(final Integer postId, final GetPostCallback callback) {
+
+        mPostsRemoteDataSource.getPost(postId, new GetPostCallback() {
+            @Override
+            public void onPostLoaded(Post post) {
+                mPostsLocalDataSource.addPost(post);
+                callback.onPostLoaded(post);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                mAppIsOffline = true;
                 callback.onDataNotAvailable();
             }
         });

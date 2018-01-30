@@ -58,6 +58,7 @@ public class PostsPresenter implements PostsContract.Presenter {
                 }
                 if (posts.isEmpty()) {
                     mPostsView.showNoPostsMessage();
+
                 } else {
                     mPostsView.showPosts(posts);
                 }
@@ -69,6 +70,7 @@ public class PostsPresenter implements PostsContract.Presenter {
                     return;
                 }
                 mPostsView.showLoadingPostsError();
+                mPostsView.setLoadingIndicator(false);
             }
         });
     }
