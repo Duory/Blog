@@ -88,7 +88,7 @@ public class BlogRemoteDataSource implements PostsDataSource, CommentsDataSource
     }
 
     @Override
-    public void addPost(Post post) {
+    public void addPost(@NonNull final Post post) {
 
     }
 

@@ -2,8 +2,6 @@ package home.mva.blog.data.source;
 
 import android.support.annotation.NonNull;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import home.mva.blog.data.model.Post;
@@ -112,7 +110,14 @@ public class PostsRepository implements PostsDataSource {
     @Override
     public void addPost(@NonNull Post post) {
 
-        mPostsRemoteDataSource.addPost(post);
+        if (post.getId() == null) {
+            //Server handles unique ids.
+            mPostsRemoteDataSource.addPost(post);
+        } else {
+            //If post already got an id from server just put into local.
+            mPostsLocalDataSource.addPost(post);
+        }
+
     }
 
     @Override
