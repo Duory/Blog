@@ -114,8 +114,23 @@ public class BlogRemoteDataSource implements PostsDataSource, CommentsDataSource
     }
 
     @Override
-    public void getCommentsByPostId(Integer postId, GetCommentsCallback callback) {
+    public void getCommentsByPostId(@NonNull final Integer postId, @NonNull final GetCommentsCallback callback) {
 
+        Call<List<Comment>> getCommentsByPost = mBlogApi.getCommentsByPostId(postId);
+
+        getCommentsByPost.enqueue(new Callback<List<Comment>>() {
+            @Override
+            public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onCommentsLoaded(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Comment>> call, Throwable t) {
+                callback.onDataNotAvailable();
+            }
+        });
     }
 
     @Override

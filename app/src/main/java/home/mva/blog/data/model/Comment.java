@@ -19,57 +19,57 @@ public class Comment {
 
     @PrimaryKey
     @ColumnInfo(name = "id")
-    private Integer mId;
+    private Integer id;
 
     @ColumnInfo(name = "postid")
-    private Integer mPostId;
+    private Integer postId;
 
     @ColumnInfo(name = "name")
-    private String mName;
+    private String name;
 
     @ColumnInfo(name = "email")
-    private String mEmail;
+    private String email;
 
     @ColumnInfo(name = "body")
-    private String mBody;
+    private String body;
 
     public Integer getId() {
-        return mId;
+        return id;
     }
 
     public void setId(Integer mId) {
-        this.mId = mId;
+        this.id = mId;
     }
 
     public Integer getPostId() {
-        return mPostId;
+        return postId;
     }
 
     public void setPostId(Integer mPostId) {
-        this.mPostId = mPostId;
+        this.postId = mPostId;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public void setName(String mName) {
-        this.mName = mName;
+        this.name = mName;
     }
 
     public String getEmail() {
-        return mEmail;
+        return email;
     }
 
     public void setEmail(String mEmail) {
-        this.mEmail = mEmail;
+        this.email = mEmail;
     }
 
     public String getBody() {
-        return mBody;
+        return body;
     }
 
     public void setBody(String mBody) {
-        this.mBody = mBody;
+        this.body = mBody;
     }
 }

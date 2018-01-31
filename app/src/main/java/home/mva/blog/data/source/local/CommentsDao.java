@@ -13,7 +13,7 @@ import home.mva.blog.data.model.Comment;
 @Dao
 public interface CommentsDao {
 
-    @Query("SELECT * FROM comments WHERE postid=:postId")
+    @Query("SELECT * FROM comments WHERE postId=:postId")
     List<Comment> getCommentsForPost(Integer postId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -22,6 +22,6 @@ public interface CommentsDao {
     @Delete
     void deleteComment(Comment comment);
 
-    @Query("DELETE FROM comments WHERE postid=:postId")
+    @Query("DELETE FROM comments WHERE postId=:postId")
     void deleteCommentsByPostId(Integer postId);
 }
