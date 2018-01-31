@@ -4,4 +4,6 @@
     <string name="no_posts_message">no posts</string>
     <string name="loading_posts_error">No respond from server, refresh for get cached data (if available) </string>
     <string name="post_author">Author: </string>
+    <string name="loading">LOADING</string>
+    <string name="no_data">SELECTED POST IS NO MORE</string>
 </resources>

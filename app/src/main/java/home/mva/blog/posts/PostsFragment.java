@@ -1,5 +1,6 @@
 package home.mva.blog.posts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import home.mva.blog.R;
 import home.mva.blog.data.model.Post;
+import home.mva.blog.postdetail.PostDetailActivity;
 
 public class PostsFragment extends Fragment implements PostsContract.View {
 
@@ -59,7 +61,7 @@ public class PostsFragment extends Fragment implements PostsContract.View {
         listView.setAdapter(mListAdapter);
 
         // Set up floating action button
-        FloatingActionButton fab = getActivity().findViewById(R.id.fabAddTask);
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab_add_post);
 
         fab.setImageResource(R.drawable.ic_plus_white_24dp);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -113,8 +115,11 @@ public class PostsFragment extends Fragment implements PostsContract.View {
     }
 
     @Override
-    public void showPostDetailsUi(Integer postId) {
-
+    public void showPostDetailsUi(Integer postId, boolean isCreatedByCurrentUser) {
+        Intent intent = new Intent(getContext(), PostDetailActivity.class);
+        intent.putExtra(PostDetailActivity.EXTRA_POST_ID, postId);
+        intent.putExtra(PostDetailActivity.EXTRA_IS_CURRENT_USER_CREATOR, isCreatedByCurrentUser);
+        startActivity(intent);
     }
 
     @Override

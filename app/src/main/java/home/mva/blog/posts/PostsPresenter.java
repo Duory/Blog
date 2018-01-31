@@ -14,6 +14,9 @@ import home.mva.blog.data.source.PostsRepository;
  */
 public class PostsPresenter implements PostsContract.Presenter {
 
+    //Stub for current user
+    private static final Integer CURRENT_USER = 3;
+
     private final PostsRepository mPostsRepository;
 
     private final PostsContract.View mPostsView;
@@ -77,7 +80,11 @@ public class PostsPresenter implements PostsContract.Presenter {
 
     @Override
     public void openPost(@NonNull Post requestedPost) {
-        mPostsView.showPostDetailsUi(requestedPost.getId());
+        boolean isCreatedByCurrentUser = false;
+        if (requestedPost.getUserId().equals(CURRENT_USER)) {
+            isCreatedByCurrentUser = true;
+        }
+        mPostsView.showPostDetailsUi(requestedPost.getId(), isCreatedByCurrentUser);
     }
 
     @Override
