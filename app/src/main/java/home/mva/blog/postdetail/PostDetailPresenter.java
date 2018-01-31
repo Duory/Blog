@@ -3,7 +3,11 @@ package home.mva.blog.postdetail;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.List;
+
+import home.mva.blog.data.model.Comment;
 import home.mva.blog.data.model.Post;
+import home.mva.blog.data.source.CommentsDataSource;
 import home.mva.blog.data.source.CommentsRepository;
 import home.mva.blog.data.source.PostsDataSource;
 import home.mva.blog.data.source.PostsRepository;
@@ -35,6 +39,7 @@ public class PostDetailPresenter implements PostDetailContract.Presenter {
     @Override
     public void start() {
         openPost();
+        getComments();
     }
 
     private void openPost() {
@@ -67,6 +72,7 @@ public class PostDetailPresenter implements PostDetailContract.Presenter {
                 mPostDetailView.showMissingPost();
             }
         });
+
     }
 
     private void showPost(@NonNull Post post) {
@@ -89,6 +95,31 @@ public class PostDetailPresenter implements PostDetailContract.Presenter {
 
     @Override
     public void getComments() {
+        if (mPostId == null) {
+            return;
+        }
+        mCommentsRepository.getCommentsByPostId(mPostId, new CommentsDataSource.GetCommentsCallback() {
+            @Override
+            public void onCommentsLoaded(List<Comment> comments) {
+                // The view may not be able to handle UI updates anymore
+                if (!mPostDetailView.isActive()) {
+                    return;
+                }
+                if (comments == null) {
+                    mPostDetailView.showMissingComments();
+                } else {
+                    mPostDetailView.showComments(comments);
+                }
+            }
 
+            @Override
+            public void onDataNotAvailable() {
+                // The view may not be able to handle UI updates anymore
+                if (!mPostDetailView.isActive()) {
+                    return;
+                }
+                mPostDetailView.showMissingComments();
+            }
+        });
     }
 }

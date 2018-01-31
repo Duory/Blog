@@ -56,7 +56,7 @@ public class PostsFragment extends Fragment implements PostsContract.View {
 
         View root = inflater.inflate(R.layout.posts_fragment, container, false);
 
-        // Set up posts view
+        // Set up posts list view
         ListView listView = root.findViewById(R.id.posts_list);
         listView.setAdapter(mListAdapter);
 
@@ -85,7 +85,7 @@ public class PostsFragment extends Fragment implements PostsContract.View {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.loadPosts(false);
+                mPresenter.loadPosts(true);
             }
         });
 
@@ -157,17 +157,13 @@ public class PostsFragment extends Fragment implements PostsContract.View {
         private PostItemListener mItemListener;
 
         public PostsAdapter(List<Post> posts, PostItemListener itemListener) {
-            setList(posts);
+            mPosts = posts;
             mItemListener = itemListener;
         }
 
         public void replaceData(List<Post> posts) {
-            setList(posts);
-            notifyDataSetChanged();
-        }
-
-        private void setList(List<Post> posts) {
             mPosts = posts;
+            notifyDataSetChanged();
         }
 
         @Override

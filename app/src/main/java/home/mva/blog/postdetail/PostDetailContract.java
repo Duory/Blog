@@ -25,6 +25,8 @@ public interface PostDetailContract {
         void showPostDeleted();
 
         boolean isActive();
+
+        void showMissingComments();
     }
 
     interface Presenter extends BasePresenter {
