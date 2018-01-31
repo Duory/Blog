@@ -13,9 +13,18 @@ public interface CommentsDataSource {
         void onDataNotAvailable();
     }
 
+    interface AddCommentCallback {
+
+        void onCommentAddedToRemote(Comment comment);
+
+        void onSuccess();
+
+        void onError();
+    }
+
     void getCommentsByPostId(Integer postId, GetCommentsCallback callback);
 
-    void addComment(Comment comment);
+    void addComment(Comment comment, AddCommentCallback callback);
 
     void deleteCommentsByPostId(Integer postId);
 

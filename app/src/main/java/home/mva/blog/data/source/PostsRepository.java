@@ -108,16 +108,24 @@ public class PostsRepository implements PostsDataSource {
     }
 
     @Override
-    public void addPost(@NonNull Post post) {
+    public void addPost(@NonNull Post post, @NonNull final AddPostCallback callback) {
 
-        if (post.getId() == null) {
-            //Server handles unique ids.
-            mPostsRemoteDataSource.addPost(post);
-        } else {
-            //If post already got an id from server just put into local.
-            mPostsLocalDataSource.addPost(post);
-        }
+            mPostsRemoteDataSource.addPost(post, new AddPostCallback() {
+                @Override
+                public void onPostAddedToRemote(Post post) {
+                    mPostsLocalDataSource.addPost(post, callback);
+                }
 
+                @Override
+                public void onSuccess() {
+                    callback.onSuccess();
+                }
+
+                @Override
+                public void onError() {
+                    callback.onError();
+                }
+            });
     }
 
     @Override
@@ -169,7 +177,21 @@ public class PostsRepository implements PostsDataSource {
         mPostsRemoteDataSource.getPost(postId, new GetPostCallback() {
             @Override
             public void onPostLoaded(Post post) {
-                mPostsLocalDataSource.addPost(post);
+                mPostsLocalDataSource.addPost(post, new AddPostCallback() {
+                    @Override
+                    public void onPostAddedToRemote(Post post) {
+                    }
+
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
                 callback.onPostLoaded(post);
             }
 
@@ -186,7 +208,19 @@ public class PostsRepository implements PostsDataSource {
         mPostsLocalDataSource.deleteAllPosts();
 
         for (Post post : posts) {
-            mPostsLocalDataSource.addPost(post);
+            mPostsLocalDataSource.addPost(post, new AddPostCallback() {
+                @Override
+                public void onPostAddedToRemote(Post post) {
+                }
+
+                @Override
+                public void onSuccess() {
+                }
+
+                @Override
+                public void onError() {
+                }
+            });
         }
 
         mCacheIsDirty = false;

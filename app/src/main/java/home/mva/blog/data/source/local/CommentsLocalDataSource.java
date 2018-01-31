@@ -59,11 +59,12 @@ public class CommentsLocalDataSource implements CommentsDataSource {
     }
 
     @Override
-    public void addComment(@NonNull final Comment comment) {
+    public void addComment(@NonNull final Comment comment, final AddCommentCallback callback) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 mCommentsDao.insertComment(comment);
+                callback.onSuccess();
             }
         };
         mAppExecutors.getDiskIO().execute(runnable);

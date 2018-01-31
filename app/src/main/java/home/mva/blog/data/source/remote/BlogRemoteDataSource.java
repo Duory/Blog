@@ -88,13 +88,41 @@ public class BlogRemoteDataSource implements PostsDataSource, CommentsDataSource
     }
 
     @Override
-    public void addPost(@NonNull final Post post) {
+    public void addPost(@NonNull final Post post,@NonNull final AddPostCallback callback) {
 
+        Call<Post> addPost = mBlogApi.addPost(post);
+
+        addPost.enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onPostAddedToRemote(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                callback.onError();
+            }
+        });
     }
 
     @Override
     public void updatePost(Post post) {
 
+        Call<Post> editPost = mBlogApi.updatePost(post);
+
+        editPost.enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+                //No needed
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                //No needed
+            }
+        });
     }
 
     @Override
@@ -134,8 +162,23 @@ public class BlogRemoteDataSource implements PostsDataSource, CommentsDataSource
     }
 
     @Override
-    public void addComment(Comment comment) {
+    public void addComment(@NonNull final Comment comment,@NonNull final AddCommentCallback callback) {
 
+        Call<Comment> addComment = mBlogApi.addComment(comment);
+
+        addComment.enqueue(new Callback<Comment>() {
+            @Override
+            public void onResponse(Call<Comment> call, Response<Comment> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onCommentAddedToRemote(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Comment> call, Throwable t) {
+                callback.onError();
+            }
+        });
     }
 
     @Override

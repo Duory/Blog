@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import home.mva.blog.R;
+import home.mva.blog.addeditpost.AddEditPostActivity;
 import home.mva.blog.data.model.Post;
 import home.mva.blog.postdetail.PostDetailActivity;
 
@@ -124,7 +125,8 @@ public class PostsFragment extends Fragment implements PostsContract.View {
 
     @Override
     public void showAddPost() {
-
+        Intent intent = new Intent(getContext(), AddEditPostActivity.class);
+        startActivityForResult(intent, AddEditPostActivity.REQUEST_ADD_POST);
     }
 
     @Override

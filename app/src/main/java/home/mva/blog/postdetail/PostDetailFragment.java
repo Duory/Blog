@@ -1,11 +1,17 @@
 package home.mva.blog.postdetail;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -16,6 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import home.mva.blog.R;
+import home.mva.blog.addcomment.AddCommentActivity;
+import home.mva.blog.addcomment.AddCommentFragment;
+import home.mva.blog.addeditpost.AddEditPostActivity;
+import home.mva.blog.addeditpost.AddEditPostFragment;
 import home.mva.blog.data.model.Comment;
 
 
@@ -27,6 +37,9 @@ public class PostDetailFragment extends Fragment implements PostDetailContract.V
 
     @NonNull
     private static final String ARGUMENT_POST_ID = "POST_ID";
+
+    @NonNull
+    private static final int REQUEST_EDIT_POST = 1;
 
     @NonNull
     private static final String ARGUMENT_IS_CURRENT_USER_CREATOR = "IS_CURRENT_USER_CREATOR";
@@ -65,6 +78,8 @@ public class PostDetailFragment extends Fragment implements PostDetailContract.V
 
         View root = inflater.inflate(R.layout.postdetail_fragment, container, false);
 
+        setHasOptionsMenu(isCurrentUserCreator);
+
         mDetailTitle = root.findViewById(R.id.post_detail_title);
         mDetailBody = root.findViewById(R.id.post_detail_body);
 
@@ -80,15 +95,26 @@ public class PostDetailFragment extends Fragment implements PostDetailContract.V
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.editPost();
+                mPresenter.addComment();
             }
         });
 
-        // Hide fab if have not edit permission
-        if (!isCurrentUserCreator) {
-            fab.setVisibility(View.GONE);
-        }
         return root;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit_menu_item:
+                mPresenter.editPost();
+                return true;
+        }
+        return false;
     }
 
     @Override
@@ -127,7 +153,19 @@ public class PostDetailFragment extends Fragment implements PostDetailContract.V
 
     @Override
     public void showEditPost(Integer postId) {
+        Intent intent = new Intent(getContext(), AddEditPostActivity.class);
+        intent.putExtra(AddEditPostFragment.ARGUMENT_EDIT_POST_ID, postId);
+        startActivityForResult(intent, REQUEST_EDIT_POST);
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_EDIT_POST) {
+            // If the task was edited successfully, go back to the list.
+            if (resultCode == Activity.RESULT_OK) {
+                getActivity().finish();
+            }
+        }
     }
 
     @Override
@@ -142,7 +180,14 @@ public class PostDetailFragment extends Fragment implements PostDetailContract.V
 
     @Override
     public void showMissingComments() {
+        Snackbar.make(getView(), getString(R.string.no_comments_found), Snackbar.LENGTH_LONG).show();
+    }
 
+    @Override
+    public void showAddCommentForPost(Integer postId) {
+        Intent intent = new Intent(getContext(), AddCommentActivity.class);
+        intent.putExtra(AddCommentFragment.ARGUMENT_POST_ID, postId);
+        startActivity(intent);
     }
 
     private static class CommentsAdapter extends BaseAdapter {

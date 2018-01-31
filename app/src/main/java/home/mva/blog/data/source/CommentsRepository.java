@@ -2,7 +2,6 @@ package home.mva.blog.data.source;
 
 import android.support.annotation.NonNull;
 
-import java.util.Collections;
 import java.util.List;
 
 import home.mva.blog.data.model.Comment;
@@ -72,10 +71,25 @@ public class CommentsRepository implements CommentsDataSource {
     }
 
     @Override
-    public void addComment(@NonNull Comment comment) {
+    public void addComment(@NonNull Comment comment, final AddCommentCallback callback) {
 
-        mCommentsLocalDataSource.addComment(comment);
-        mCommentsRemoteDataSource.addComment(comment);
+        mCommentsRemoteDataSource.addComment(comment, new AddCommentCallback() {
+            @Override
+            public void onCommentAddedToRemote(Comment comment) {
+                mCommentsLocalDataSource.addComment(comment, callback);
+            }
+
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
+            }
+        });
+
     }
 
     @Override
@@ -119,7 +133,22 @@ public class CommentsRepository implements CommentsDataSource {
         mCommentsLocalDataSource.deleteCommentsByPostId(postId);
 
         for (Comment comment : comments){
-            mCommentsLocalDataSource.addComment(comment);
+            mCommentsLocalDataSource.addComment(comment, new AddCommentCallback() {
+                @Override
+                public void onCommentAddedToRemote(Comment comment) {
+
+                }
+
+                @Override
+                public void onSuccess() {
+
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            });
         }
     }
 

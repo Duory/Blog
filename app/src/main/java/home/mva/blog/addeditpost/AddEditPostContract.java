@@ -2,7 +2,6 @@ package home.mva.blog.addeditpost;
 
 import home.mva.blog.base.BasePresenter;
 import home.mva.blog.base.BaseView;
-import home.mva.blog.data.model.Post;
 
 public interface AddEditPostContract {
 
@@ -10,15 +9,21 @@ public interface AddEditPostContract {
 
         void showEmptyPostError();
 
-        void setupForEditing(Post post);
+        void setupForEditing(String title, String body);
+
+        void showPostsList();
 
         boolean isActive();
 
+        void showCantAddError();
     }
 
     interface Presenter extends BasePresenter {
 
+        void savePost(String title, String body);
 
+        void populatePost();
 
+        boolean isDataMissing();
     }
 }

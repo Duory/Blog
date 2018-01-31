@@ -16,12 +16,12 @@ public class PostsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.posts_activity);
 
-        PostsFragment postsFragment =
-                (PostsFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        PostsFragment postsFragment = (PostsFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.postContentFrame);
         if (postsFragment == null) {
             postsFragment = PostsFragment.newInstance();
             ActivityUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), postsFragment, R.id.contentFrame);
+                    getSupportFragmentManager(), postsFragment, R.id.postContentFrame);
         }
 
         // Create the presenter

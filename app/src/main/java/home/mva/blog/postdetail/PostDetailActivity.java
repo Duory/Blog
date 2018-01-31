@@ -24,13 +24,13 @@ public class PostDetailActivity extends AppCompatActivity {
         boolean isCreatedByCurrentUser = getIntent().getBooleanExtra(EXTRA_IS_CURRENT_USER_CREATOR, false);
 
         PostDetailFragment postDetailFragment = (PostDetailFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.contentFrame);
+                .findFragmentById(R.id.detailContentFrame);
 
         if (postDetailFragment == null) {
             postDetailFragment = PostDetailFragment.newInstance(postId, isCreatedByCurrentUser);
 
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
-                    postDetailFragment, R.id.contentFrame);
+                    postDetailFragment, R.id.detailContentFrame);
         }
 
         // Create the presenter

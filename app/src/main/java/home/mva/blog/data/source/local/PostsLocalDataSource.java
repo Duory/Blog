@@ -80,11 +80,12 @@ public class PostsLocalDataSource implements PostsDataSource {
     }
 
     @Override
-    public void addPost(@NonNull final Post post) {
+    public void addPost(@NonNull final Post post, final AddPostCallback callback) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 mPostsDao.insertPost(post);
+                callback.onSuccess();
             }
         };
         mAppExecutors.getDiskIO().execute(runnable);

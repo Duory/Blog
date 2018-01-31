@@ -6,4 +6,13 @@
     <string name="post_author">Author: </string>
     <string name="loading">LOADING</string>
     <string name="no_data">SELECTED POST IS NO MORE</string>
+    <string name="title_hint">Enter title here</string>
+    <string name="title_body">Enter post body here</string>
+    <string name="empty_post_message">Post is empty</string>
+    <string name="cant_add_error">Can\'t add while offline</string>
+    <string name="no_comments_found">No comments found.</string>
+    <string name="button_add_comment">Add</string>
+    <string name="comment_hint">Enter comment here</string>
+    <string name="empty_comment_message">Comment is empty</string>
+    <string name="menu_item">Edit</string>
 </resources>

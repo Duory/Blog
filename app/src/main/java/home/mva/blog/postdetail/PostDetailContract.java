@@ -27,6 +27,8 @@ public interface PostDetailContract {
         boolean isActive();
 
         void showMissingComments();
+
+        void showAddCommentForPost(Integer mPostId);
     }
 
     interface Presenter extends BasePresenter {
@@ -36,5 +38,7 @@ public interface PostDetailContract {
         void deletePost();
 
         void getComments();
+
+        void addComment();
     }
 }

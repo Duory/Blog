@@ -85,7 +85,7 @@ public class PostDetailPresenter implements PostDetailContract.Presenter {
 
     @Override
     public void editPost() {
-
+        mPostDetailView.showEditPost(mPostId);
     }
 
     @Override
@@ -121,5 +121,10 @@ public class PostDetailPresenter implements PostDetailContract.Presenter {
                 mPostDetailView.showMissingComments();
             }
         });
+    }
+
+    @Override
+    public void addComment() {
+        mPostDetailView.showAddCommentForPost(mPostId);
     }
 }

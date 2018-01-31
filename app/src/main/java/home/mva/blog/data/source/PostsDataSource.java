@@ -20,11 +20,21 @@ public interface PostsDataSource {
         void onDataNotAvailable();
     }
 
+    interface AddPostCallback {
+
+        void onPostAddedToRemote(Post post);
+
+        void onSuccess();
+
+        void onError();
+
+    }
+
     void getPosts(GetPostsCallback callback);
 
     void getPost(Integer postId, GetPostCallback callback);
 
-    void addPost(Post post);
+    void addPost(Post post, AddPostCallback callback);
 
     void updatePost(Post post);
 
