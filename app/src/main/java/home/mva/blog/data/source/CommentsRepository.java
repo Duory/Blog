@@ -24,16 +24,16 @@ public class CommentsRepository implements CommentsDataSource {
     private boolean mCacheIsDirty = false;
 
     // Prevent direct instantiation.
-    private CommentsRepository(@NonNull CommentsDataSource commentsLocalDataSource,
-                               @NonNull CommentsDataSource commentsRemoteDataSource) {
-        mCommentsLocalDataSource = commentsLocalDataSource;
+    private CommentsRepository(@NonNull CommentsDataSource commentsRemoteDataSource,
+                               @NonNull CommentsDataSource commentsLocalDataSource) {
         mCommentsRemoteDataSource = commentsRemoteDataSource;
+        mCommentsLocalDataSource = commentsLocalDataSource;
     }
 
-    public static CommentsRepository getInstance(CommentsDataSource commentsLocalDataSource,
-                                                 CommentsDataSource commentsRemoteDataSource) {
+    public static CommentsRepository getInstance(CommentsDataSource commentsRemoteDataSource,
+                                                 CommentsDataSource commentsLocalDataSource) {
         if (instance == null) {
-            instance = new CommentsRepository(commentsLocalDataSource, commentsRemoteDataSource);
+            instance = new CommentsRepository(commentsRemoteDataSource, commentsLocalDataSource);
         }
         return instance;
     }

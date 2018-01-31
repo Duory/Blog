@@ -31,16 +31,16 @@ public class PostsRepository implements PostsDataSource {
     private boolean mAppIsOffline = false;
 
     // Prevent direct instantiation.
-    private PostsRepository(@NonNull PostsDataSource postsLocalDataSource,
-                            @NonNull PostsDataSource postsRemoteDataSource) {
-        mPostsLocalDataSource = postsLocalDataSource;
+    private PostsRepository(@NonNull PostsDataSource postsRemoteDataSource,
+                            @NonNull PostsDataSource postsLocalDataSource) {
         mPostsRemoteDataSource = postsRemoteDataSource;
+        mPostsLocalDataSource = postsLocalDataSource;
     }
 
     public static PostsRepository getInstance(PostsDataSource postsRemoteDataSource,
                                               PostsDataSource postsLocalDataSource) {
         if (instance == null) {
-            instance = new PostsRepository(postsLocalDataSource, postsRemoteDataSource);
+            instance = new PostsRepository(postsRemoteDataSource, postsLocalDataSource);
         }
         return instance;
     }
