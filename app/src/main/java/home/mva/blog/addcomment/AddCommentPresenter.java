@@ -34,7 +34,6 @@ public class AddCommentPresenter implements AddCommentContract.Presenter {
 
     @Override
     public void addComment(String body) {
-
         if (body.isEmpty()) {
             mAddCommentView.showEmptyCommentError();
         } else {
@@ -60,6 +59,5 @@ public class AddCommentPresenter implements AddCommentContract.Presenter {
                 }
             });
         }
-
     }
 }

@@ -1,6 +1,5 @@
 package home.mva.blog.addeditpost;
 
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -29,7 +28,6 @@ public class AddEditPostPresenter implements AddEditPostContract.Presenter, Post
         mPostsRepository = postsRepository;
         mAddEditPostView = addEditPostView;
         mIsDataMissing = shouldLoadDataFromRepo;
-
         mAddEditPostView.setPresenter(this);
     }
 

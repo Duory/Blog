@@ -24,6 +24,7 @@ public class AddEditPostActivity extends AppCompatActivity {
         AddEditPostFragment addEditPostFragment = (AddEditPostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.addEditContentFrame);
 
+        //Get post id
         Integer postId = getIntent().getIntExtra(AddEditPostFragment.ARGUMENT_EDIT_POST_ID, 0);
 
         if (addEditPostFragment == null) {

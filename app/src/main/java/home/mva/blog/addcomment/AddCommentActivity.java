@@ -19,8 +19,8 @@ public class AddCommentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addcomment_activity);
 
+        // Get post id
         Integer postId = getIntent().getIntExtra(EXTRA_POST_ID, 0);
-
 
         AddCommentFragment addCommentFragment = (AddCommentFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.commentContentFrame);

@@ -6,7 +6,6 @@ import home.mva.blog.base.BaseView;
 public interface AddEditPostContract {
 
     interface View extends BaseView<Presenter> {
-
         void showEmptyPostError();
 
         void setupForEditing(String title, String body);
@@ -19,7 +18,6 @@ public interface AddEditPostContract {
     }
 
     interface Presenter extends BasePresenter {
-
         void savePost(String title, String body);
 
         void populatePost();

@@ -6,7 +6,6 @@ import home.mva.blog.base.BaseView;
 public interface AddCommentContract {
 
     interface View extends BaseView<Presenter> {
-
         void showCantAddError();
 
         void showEmptyCommentError();
@@ -15,7 +14,6 @@ public interface AddCommentContract {
     }
 
     interface Presenter extends BasePresenter {
-
         void addComment(String body);
     }
 }

@@ -22,7 +22,6 @@ public class AddCommentFragment extends Fragment implements AddCommentContract.V
     private TextView mBody;
 
     public static AddCommentFragment newInstance() {
-
         return new AddCommentFragment();
     }
 
@@ -41,6 +40,7 @@ public class AddCommentFragment extends Fragment implements AddCommentContract.V
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        // Set up floating action button
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_add);
         fab.setImageResource(R.drawable.ic_check_white_24dp);
         fab.setOnClickListener(new View.OnClickListener() {

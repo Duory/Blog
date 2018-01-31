@@ -24,7 +24,6 @@ public class AddEditPostFragment extends Fragment implements AddEditPostContract
     private TextView mBody;
 
     public static AddEditPostFragment newInstance() {
-
         return new AddEditPostFragment();
     }
 
@@ -43,6 +42,7 @@ public class AddEditPostFragment extends Fragment implements AddEditPostContract
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        // Set up floating action button
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_apply);
         fab.setImageResource(R.drawable.ic_check_white_24dp);
         fab.setOnClickListener(new View.OnClickListener() {
