@@ -82,7 +82,6 @@ public class PasswordActivity extends AppCompatActivity implements View.OnClickL
                 startApp();
             } else {
                 Snackbar.make(v, getString(R.string.invalid_password), Snackbar.LENGTH_LONG).show();
-                return;
             }
         }
     }
