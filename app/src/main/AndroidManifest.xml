@@ -24,6 +24,7 @@
         <activity android:name=".postdetail.PostDetailActivity" />
         <activity android:name=".addeditpost.AddEditPostActivity" />
         <activity android:name=".addcomment.AddCommentActivity" />
+        <activity android:name=".util.PasswordActivity" />
 
 
     </application>

@@ -15,4 +15,10 @@
     <string name="comment_hint">Enter comment here</string>
     <string name="empty_comment_message">Comment is empty</string>
     <string name="menu_item">Edit</string>
+    <string name="password_button">Enter</string>
+    <string name="create_password">Create your password</string>
+    <string name="button_create">Create</string>
+    <string name="empty_password">Password is empty</string>
+    <string name="password_cleared">Master code. Password removed.</string>
+    <string name="invalid_password">Invalid password.</string>
 </resources>
