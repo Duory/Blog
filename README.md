@@ -1,2 +1,2 @@
 # Blog
-Test task
+Practice app
